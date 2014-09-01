@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="bootstrap/css/bootstrap-combined.min.css" rel="stylesheet"/>  
+<link rel="stylesheet" type="text/css"  href="bootstrap/css/bootstrap-datetimepicker.min.css"/>  
+</head>
+<body> 
+<div class="input-append date" id="datetimepicker" data-date="Aug-19-2014" data-date-format="MM/dd/yyyy">
+    <input class="span2" size="16" type="text" value="Aug-19-2014">
+    <span class="add-on"><i class="icon-th"></i></span>
+</div> 
+    <script type="text/javascript"  src="script/jquery-1.11.1.min.js"></script>   
+    <script type="text/javascript"  src="bootstrap/js/bootstrap.min.js"></script>  
+    <script type="text/javascript"  src="bootstrap/js/bootstrap-datetimepicker.min.js"></script>  
+    <script type="text/javascript">  
+    var datetime;
+    $('#datetimepicker').datetimepicker({  
+        format: 'MM/dd/yyyy', 
+        color:'green',
+        startView:2,
+        minView:2,
+        language: 'en',  
+        pickDate: true,  
+        pickTime: false,
+        todayBtn:true,
+        todayHighlight:true,
+        keyboardNavigation:true,
+        autoclose:true
+      });  
+      // onchangeDate event-->get the changed date
+      $('#datetimepicker').datetimepicker().on('changeDate',function(ev){
+    	  datetime=$('#datetime').val();
+    	  alert(datetime);
+      });
+    </script>     
+</body>
+</html>

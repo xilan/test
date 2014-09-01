@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+body{ margin: 0; }
+ path { stroke: black; stroke-width: 2px; fill: none;}
+ </style>
+<title>time_d3</title>
+<script src="js/d3.v3.js"></script>
+<script src="js/d3.v3.min.js"></script>
+<script src="js/topojson.v1.min.js"></script>
+<script src="js/queue.v1.min.js"></script>
+</head>  
+<body>
+<script>
+var dataset=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
+var w=1000;
+var h=500;
+var colors=d3.scale.category10();
+var svg=d3.select("body").append("svg")
+                         .attr("width",w)
+                         .attr("height",h);
+ var line=d3.svg.line()
+             .x(function(d,i){
+            	 return i*30+40;
+             })
+             .y(function(d){
+            	 return h-10;
+             })
+             ;
+ 
+ svg.selectAll("circle")
+ .data(dataset)
+ .enter()
+ .append("circle")
+ .attr("cx",function(d,i){
+	  return i*30+30;
+ })
+ .attr("cy",function(d){
+	  return h-10;
+ })
+ .attr("r",10)
+ .style("fill","#ccc")
+ .on("mouseover",function(d,i){
+	 d3.select(this)
+	    .transition()
+	    .style("fill",function(d,i){
+		 
+		 return colors(i);
+	 })
+ })
+ .on("mouseout",function(){
+	 d3.select(this)
+	    .transition()
+	    .duration(1000)
+	    .style("fill","#ccc")
+ });
+  svg.append("path").datum(dataset).attr("d",line);
+  
+   
+ /*  d3.select("body").append("svg").append("circle")
+                                  .attr(
+                                		  {
+                                			  r:10,
+                                			  cx:100,
+                                			  cy:100
+                                		  })
+                                  .transition()
+                                  .duration(1000)
+                                  .attr("cx",300);
+   */
+ 
+ 
+</script>
+</body>
+</html>

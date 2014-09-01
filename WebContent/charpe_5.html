@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>charpe_5</title>
+<script src="js/d3.v3.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+ /*d3.select("body").append("p").text("new paragraph");
+ d3.csv("food.csv",function(data){
+	 console.log(data);
+ });
+ var dataset;
+ d3.csv("food.csv",function(error,data){
+	 if(error){
+		 console.log(error);
+	 }
+	 else{
+		 console.log(data);
+	 }
+	  dataset=data;
+	  generateVis();
+	  hideLoadingMsg();
+	 
+ });
+ */
+ var dataset=[5,10,20,30,40];
+ d3.select("body").selectAll("p")
+   .data(dataset)
+   .enter()
+   .append("p")
+   .text(function(data){
+	  return data;
+   })
+   .style("color",function(d){
+	   if(d>18)
+		   return "red";
+	   else return "black";
+   });
+ console.log(d3.selectAll("p"));
+</script>
+</body>
+</html>
