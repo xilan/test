@@ -23,7 +23,7 @@
     path{
     fill: none;
 		stroke: rgba(37, 140, 249, 0.8);
-		stroke-width: 1;
+		stroke-width: 0.5;
     }
     path:hover{
     fill:rgba(14, 241, 242, 0.8);
@@ -117,6 +117,11 @@
   stroke-width: 8px;
   stroke-linecap: round;
 }
+.axis text{
+    font-family:sans-serif;
+    font-size: 12px;
+    fill: greenyellow;
+}
 
 .slider .handle {
   fill: #fff;
@@ -129,21 +134,32 @@
     </style>
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="CSS/main.css"/>
+ <script  src="script/jquery-1.11.1.min.js"></script>
 <script src="js/d3.v3.min.js"></script>
 <script src="js/topojson.v1.min.js"></script>
 <script src="js/d3.slider.js"></script>
 </head>
 <body>
-<div class="container">
+<div class="header"></div>
+<div class="wrapper">
     <div class="clearfix">
-        <div class="chart">
+        <div class="datetime">
+            <input type="date" id="date"value="2014-09-01"></input>
         </div>
-        <div class="map">
-        </div>
+        <div class="container">
+           <div class="map">
+
+            </div>
+           <div class="slider">
+           </div>
+         </div>
     </div>
-    <div class="slider">
-    </div>
+
 </div>
+    <div id="tooltip" class="hidden">
+        <p><strong><span id="value"></span></strong></p>
+        <p><strong><span id="number"></span></strong></p>
+    </div>
  <!--     <div class="site-wrapper">
 
       <div class="site-wrapper-inner">
@@ -219,13 +235,13 @@
     </div>-->
  <script>
 
-var margin = {top: 20, right: 50, bottom: 40, left: 50},
-    width = 960 - margin.left - margin.right,
+var margin = {top: 20, right: 50, bottom: 40, left: 20},
+    width = 1260 - margin.left - margin.right,
     height = 10;
 
 var x = d3.scale.linear()
     .domain([0, 23])
-    .range([0, width])
+    .range([0,width])
     .clamp(true);
 
 var brush = d3.svg.brush()
@@ -281,7 +297,8 @@ slider
 
 function brushed() {
   var value = brush.extent()[0];
-  console.log(value);
+    var index=value.toString().indexOf(".");
+     time=value.toString().substring(0,index);
 
   if (d3.event.sourceEvent) { // not a programmatic event
     value = x.invert(d3.mouse(this)[0]);
@@ -292,11 +309,20 @@ function brushed() {
 //  d3.select("body").style("background-color", d3.hsl(value, .8, .8));
 }
 
-</script>
-    <script>
+//////////////////////////
+date;
+
+$("#date").click(function(){
+    // alert("you click the date");
+    date= $("#date").val().toString();
+    alert(date);
+    console.log(date);
+});
+
+ ////////////////////////////
     var m_width = $(".map").width(),
         width = 1000,
-        height = 639,
+        height = 500,
         country,
         state;
     
@@ -306,7 +332,7 @@ function brushed() {
     //.range(["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"]);
     .range(["rgba(255, 255, 255, 0.8)","rgba(14, 241, 242, 0.8)","rgba(37, 140, 249, 0.8)"]);
     */
-    var date="2014-08-01-13";
+    var datetime='2014-08-01-13';
   //create a map like map function in java
     var rateById = d3.map();
 
@@ -358,7 +384,7 @@ function brushed() {
 		// var data=country_data[0].values;
 		data_country=d3.map();
 		for(var i=0;i<country_data.length;i++){
-			if(country_data[i].key==date){
+			if(country_data[i].key==datetime){
 				var d=country_data[i].values;
 				for(var j=0;j<d.length;j++){
 					data_country.set(d[j].key,d[j].values);	
@@ -381,7 +407,7 @@ function brushed() {
 			// $("#ex2").html(JSON.stringify(state_data, null, 3));
 			  data_state=d3.map();
 				  for(var i=0;i<state_data.length;i++){
-					  if(state_data[i].key==date){
+					  if(state_data[i].key==datetime){
 					  var d=state_data[i].values;
 					  for(var j=0;j<d.length;j++){
 						  data_state.set(d[j].key,d[j].values);
@@ -406,7 +432,7 @@ function brushed() {
 			// $("#ex3").html(JSON.stringify(city_data, null, 3));
 			 data_city=d3.map();
 			  for(var i=0;i<city_data.length;i++){
-				  if(city_data[i].key==date){
+				  if(city_data[i].key==datetime){
 				  var d=city_data[i].values;
 				  for(var j=0;j<d.length;j++){
 					  data_city.set(d[j].key,d[j].values); 
@@ -447,6 +473,7 @@ function brushed() {
     	 //  return color(i);
     	   
        })*/
+              .style("stroke-width","1px")
        .style("fill",function(d,i){
     	   return color(i);
        })
@@ -464,7 +491,7 @@ function brushed() {
         .duration(750)
         .attr("transform", "translate(" + projection.translate() + ")scale(" + xyz[2] + ")translate(-" + xyz[0] + ",-" + xyz[1] + ")")
         .selectAll(["#countries", "#states", "#cities"])
-        .style("stroke-width", 1.0 / xyz[2] + "px")
+       // .style("stroke-width", 0.1+ "px")
         .selectAll(".city")
         .attr("d", path.pointRadius(20.0 / xyz[2]));
     }
@@ -502,6 +529,9 @@ function brushed() {
               .attr("id", function(d) { return d.id; })
               .attr("class", "active")
               .attr("d", path)
+                    .style("fill",function(d,i){
+                        return color(i);
+                    })
               .on("click", state_clicked)
               .on("mouseover",state_mouseover)
               .on("mouseout",state_mouseout);
@@ -526,7 +556,7 @@ function brushed() {
     	 var  count=0;
    	  count=data_country.get(d.properties.name);
      	 
-     	  
+
     	
  
       	var tooltip=d3.select("#tooltip")
@@ -669,6 +699,11 @@ function city_mouseover(d){
       svg.attr("height", w * height / width);
     });
     </script>
+
+
+<script>
+
+</script>
     
   </body>
   
