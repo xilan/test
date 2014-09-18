@@ -309,8 +309,10 @@ var quantize1 = d3.scale.
         .range(d3.range(5).map( function (i) {return "p" + i%5 + "-9";}));
 
 var projection = d3.geo .mercator(). scale(150) . translate([width / 2, height / 1.5]);
+var projection_us = d3.geo .albersUsa(). scale(150) . translate([width / 2, height / 1.5]);
 
 var path = d3.geo.path() .projection(projection);
+var  path_us=d3.geo.path().projection(projection_us)
 var svg = d3.select(".map").append("svg")
         .attr("preserveAspectRatio", "xMidYMid")
         .attr("viewBox" , "0 0 " + width + " " +height)
@@ -325,10 +327,6 @@ svg.append("rect")
         .on("click", country_clicked);
 var g = svg.append("g");
 
-d3.json("nations_geo.json", function(data) {
-
-
-});
 ///
 d3.json("countries.topo.json", function (error, us) {
 
