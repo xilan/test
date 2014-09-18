@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <script src="../script/angular.min.js"></script><!--import js-->
+    <script src="../js/d3.v3.min.js"></script>
+    <meta charset="UTF-8">
+    <title>$watch</title>
+</head>
+<body ng-app="myapp" ng-init="progresses=[20,30,40,60,70,80,90]">
+<div ng-repeat="progress in progresses"><!--notice the repeat usage-->
+<input type="range" ng-model="progress"/><!--this progress come from the value of the ng-init-->
+<br>
+
+<progress-bar progress="progress" ></progress-bar><!--this progress is from the scope and changed by the watch function-->
+</div>
+<script>
+    var myapp=angular.module("myapp",[]);
+    myapp.directive("progressBar",function(){
+        function link(scope,el,attr){
+            el=el[0];
+            var width=500;
+            var height=20;
+            var svg=d3.select(el).append("svg").attr(
+                    {
+                        width:width,
+                        height:height
+                    }
+            )
+                    .style('border','1px solid black');
+            var rect=svg.append("rect").style("fill",'blue');
+            scope.$watch("progress",function(progress){
+                rect.attr({
+                    x:0,
+                    y:0,
+                    width:width*progress/100,
+                    height:height
+                });
+            })
+        }
+        return{
+            link:link,
+            restrict:'E',
+            scope:{progress:'='}
+        };
+    });
+</script>
+</body>
+</html>

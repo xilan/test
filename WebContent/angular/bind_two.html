@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn" ng-app="CustomControl">
+<head>
+    <meta charset="UTF-8">
+    <title>CustomControl</title>
+    <style type="text/css">
+        .ng-cloak {
+            display: none;
+        }
+        div[contenteditable] {
+            cursor: pointer;
+            background-color: #D0D0D0;
+        }
+    </style>
+</head>
+<body ng-controller="MyCtrl">
+<div class="ng-cloak">
+    <div contenteditable="true" ng-model="content" title="点击后编辑">My Little Dada</div>
+    <pre>model = {{content}}</pre>
+    <button ng-click="reset()">reset model tirgger model to view($render)</button>
+</div>
+<script src="../script/angular.min.js"></script><!--import js-->
+<script type="text/javascript">
+    var app = angular.module("CustomControl", []);
+    app.controller("MyCtrl", function ($scope) {
+        $scope.reset = function() {
+            $scope.content = "My Little Dada";
+            //在这里如何获取NgModelController呢？如果你们知道，希望可以指点指点！谢谢
+        };
+    });
+    app.directive("contenteditable", function () {
+        return {
+            require:"ngModel",
+            link:function (scope, ele, attrs, ctrl) {
+                //view -> model
+                ele.bind("blur keyup",function() {
+                    scope.$apply(function() {
+                        console.log("setViewValue");
+                        ctrl.$setViewValue(ele.text());
+                    });
+                });
+
+                //model -> view
+                ctrl.$render = function(value) {
+                    console.log("render");
+                    ele.html(value);
+                };
+                //读取初始值
+                ctrl.$setViewValue(ele.text());
+            }
+        };
+    });
+</script>
+</body>
+</html>

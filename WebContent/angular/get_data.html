@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <script src="../script/angular.min.js"></script><!--import js-->
+    <script src="../js/d3.v3.min.js"></script>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body ng-app="myapp" ng-controller="MainCtrl">
+<remotedata-chart data="donutData1"></remotedata-chart>
+<remotedata-chart data="donutData2"></remotedata-chart>
+<remotedata-chart data="donutData3"></remotedata-chart>
+<script>
+   var myapp=angular.module("myapp",[]);
+/*
+// use the way of d3
+    myapp.controller("MainCtrl",function($scope){
+        d3.json("donut_chart.json",function(err,data){
+            if(err){
+                throw err;
+            }
+            $scope.data=data;
+            $scope.$apply();
+        });
+    });
+    */
+   //use the way of angularjs
+   myapp.controller("MainCtrl",function($scope,$http,$interval){
+       //use success for callback
+     $http.get('donut_chart.json').success(function(data){
+         $scope.donutData1=data;
+     }).error(function(err){
+         throw err;
+     });
+       //use then for callback
+       $http.get("donut_chart.json").then(function(response){
+           $scope.donutData2=response.data;
+       }, function (err){
+        throw  err;
+       });
+       $interval(function(){
+           $http.get('donut_chart.json').then(function(response){
+               var data=response.data.map(function(d){
+                   return d*Math.random();   })
+                   $scope.donutData3=data;
+               },function(err){
+                   throw  err;
+
+           });
+       },1000);
+
+   });
+    myapp.directive("remotedataChart",function(){
+        function link(scope,el,attr){
+            el=el[0];
+            var width=300;
+            var height=300;
+            var color=d3.scale.category10();
+            var min=Math.min(width,height);
+            var svg=d3.select(el).append("svg");
+            svg.attr({
+                width:width,
+                height:height
+            });
+            var pie=d3.layout.pie().sort(null);
+            var arc=d3.svg.arc().innerRadius(min/2*0.9)
+                    .outerRadius(min/2*0.5);
+            var g=svg.append("g").attr("transform",'translate('+width/2+','+height/2+')');
+            var path= g.selectAll("path");
+            scope.$watch("data",function(data){
+                if(!data){
+                    return;
+                }
+                path=path.data((pie(data)));
+                path.exit().remove();
+                path.enter().append("path").style("stroke",'white').attr("fill",function(d,i){
+                    return color(i);
+                });
+
+                path.attr("d",arc);
+            },true);
+        }
+        return{
+            link:link,
+            restrict:'E',
+            scope:{data:'='}
+        }
+    });
+
+
+</script>
+
+</body>
+</html>

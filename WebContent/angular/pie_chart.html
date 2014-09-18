@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="../script/angular.min.js"></script>
+   <script src="../js/d3.v3.min.js" charset="utf-8"></script>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body ng-app="myapp">
+<input type="text" ng-model="person"></input>
+hello {{person}}!
+
+
+
+<script>
+
+
+    var app=angular.module("myapp",[]);
+    app.directive("helloWorld",function(){
+        function link(scope,el,attr){
+            el.text("hello this is the ");
+        }
+        return{
+            link:link,
+            restrict;'E'
+        };
+    });
+</script>
+</body>
+</html>

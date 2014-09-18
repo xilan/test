@@ -1,0 +1,51 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>D3.js Slider Examples</title>
+    <link rel="stylesheet" href="../CSS/d3.slider.css" />
+<style>
+
+    .d3-slider-axis path {
+        stroke-width: 1;
+        fill: none;
+    }
+
+    .d3-slider-axis line {
+        fill: black;
+        stroke: #aaa;
+        shape-rendering: crispEdges;
+    }
+
+    .d3-slider-axis text {
+        font-size: 11px;
+        fill: greenyellow;
+    }
+</style>
+</head>
+<body>
+<div id="slider1"></div>
+<div id="slider2"></div>
+<script src="../js/d3.v3.min.js"></script>
+<script src="../js/d3.slider.js"></script>
+<script>
+   // d3.select("#slider").call(d3.slider().axis(true).min(0).max(23).step(1));
+    var width=300;
+    var x=d3.scale.linear().domain([0,23])
+            .range([0,width]).clamp(true);
+   var axis=d3.svg.axis().scale(x).tickFormat(function(d){
+       if(d<10)return "0"+d+":00";
+       else return d+':00';
+   })
+
+    d3.select('#slider1').call(d3.slider().axis(axis).min(0).max(23).step(1).on("slide",function slider(evt,value){
+        console.log(value);
+    }));
+
+
+
+</script>
+
+</body>
+</html>

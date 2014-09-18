@@ -1,20 +1,20 @@
 body{
-    background-color: #1b1b1b;
+    background-color:  #1b1b1b;
 }
 .header{
     width:100%;
     height:50px;
-    background-color: #1b1b1b;
+    background-color:#1b1b1b;
 }
 .wrapper{
     width:100%;
     height:100%;
 
-    background-color: black;
+    background-color: #1b1b1b;
 
 }
 .datetime{
-    width:10%;
+    width:15%;
     height:46px;
 
     border-bottom-color: #a9a9a9;
@@ -22,7 +22,7 @@ body{
     float:left;
 }
 .container {
-    width: 80%;
+    width: 85%;
     height:80%;
     margin: 0 auto;
     background-color: black;
@@ -31,8 +31,8 @@ body{
 .map{
     float: right;
     width: 100%;
-
-    background-color:black;
+    border: rgba(14, 241, 242, 0.8) solid 1px;
+    background-color:#000000;
     border-bottom-color: #000000;
 }
 
@@ -42,7 +42,7 @@ body{
     heigth:20%;
     float:right;
 
-    background-color: black;
+    background-color: #1b1b1b;
     border-top-color: black;
 
 }

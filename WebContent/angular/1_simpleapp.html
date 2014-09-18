@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <script src="../script/angular.min.js"></script><!--import js-->
+    <script src="../js/d3.v3.min.js"></script>
+    <meta charset="UTF-8">
+    <title>simpleapp</title>
+</head>
+<body ng-app>
+<div ng-controller="=mycontroller">
+<input ng-model="name" type="text" placeholder="Your name"/>
+<h1>hello {{name}}</h1>
+</div>
+<script>
+function mycontroller($scope){
+    var updateClock=function(){
+        $scope.clock=new Date();
+    };
+    setInterval(function(){
+        $scope.$apply(updateClock)
+    },1000);
+    updateClock();
+}
+</script>
+</body>
+</html>

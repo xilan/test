@@ -1,0 +1,36 @@
+div.header{
+	margin-top:0;
+	width:150px;
+	height:50px;
+	float:left;
+}
+div.left-top{
+	margin-top:70px;
+	margin-left:20px;
+	margin-right:700px;
+	width:150px;
+	heigth:300px;
+}
+div.left-bottom{
+	margin-top:200px;
+	margin-left:20px;
+	margin-rigth:700px;
+	width:150px;
+	heigth:300px;
+	
+}
+div.main{
+	margin-left:200px;
+	margin-right:20px;
+	margin-top:70px;
+	width:1000px;
+	height:639px;
+	
+}
+div.foot{
+	margin-left:200px;
+	margin-right:20px;
+	margin-bottom:10px;
+	width:1000px;
+	height:50px;
+}

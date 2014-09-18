@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="ex1"></div>
+<br>
+<div id="ex2"></div>
+<br>
+<div id="ex3"></div>
+<script  src="script/jquery-1.11.1.min.js"></script>
+<script src="js/d3.v3.min.js"></script>
+<script>
+    d3.csv("transation.csv", function(csv_data) {
+        country(csv_data);
+        state(csv_data);
+        city(csv_data);
+
+    });
+    function country(csv_data){
+        country_data = d3.nest()
+                .key(function(d){
+                    //var format=d3.format("%Y-%m-%d");
+                    var time=d.purchaseTime.substring(0,13);
+
+                    return time;
+                })
+
+                .key(function(d)  { return d.country; })
+                .rollup(function(leaves) { return leaves.length; })
+                .entries(csv_data);
+         $("#ex1").html(JSON.stringify(country_data, null, 3));
+        // var data=country_data[0].values;
+        data_country=d3.map();
+        for(var i=0;i<country_data.length;i++){
+            if(country_data[i].key==date){
+                var d=country_data[i].values;
+                for(var j=0;j<d.length;j++){
+                    data_country.set(d[j].key,d[j].values);
+                }
+            }
+        }
+         console.log(data_country.get("United States"));
+    }
+    function state(csv_data){
+        state_data = d3.nest()
+                .key(function(d){
+                    //var format=d3.format("%Y-%m-%d");
+                    var time=d.purchaseTime.substring(0,13);
+
+                    return time;
+                })
+                .key(function(d)  { return d.state; })
+                .rollup(function(leaves) { return leaves.length; })
+                .entries(csv_data);
+         $("#ex2").html(JSON.stringify(state_data, null, 3));
+        data_state=d3.map();
+        for(var i=0;i<state_data.length;i++){
+            if(state_data[i].key==date){
+                var d=state_data[i].values;
+                for(var j=0;j<d.length;j++){
+                    data_state.set(d[j].key,d[j].values);
+                }
+            }
+        }
+
+
+        //	 console.log(data_state.get("Washington"));
+    }
+    function city(csv_data){
+        city_data = d3.nest()
+                .key(function(d){
+                    //var format=d3.format("%Y-%m-%d");
+                    var time=d.purchaseTime.substring(0,13);
+
+                    return time;
+                })
+                .key(function(d)  { return d.city; })
+                .rollup(function(leaves) { return leaves.length; })
+                .entries(csv_data);
+        $("#ex3").html(JSON.stringify(city_data, null, 3));
+        data_city=d3.map();
+        for(var i=0;i<city_data.length;i++){
+            if(city_data[i].key==date){
+                var d=city_data[i].values;
+                for(var j=0;j<d.length;j++){
+                    data_city.set(d[j].key,d[j].values);
+                }
+            }
+        }
+
+
+        console.log(data_city.get("Seattle"));
+
+
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <script src="../script/angular.min.js"></script><!--import js-->
+    <script src="../js/d3.v3.min.js"></script>
+    <meta charset="UTF-8">
+    <title>the first test in angular and d3</title>
+</head>
+<body ng-app="myapp">
+<hello-world></hello-world>
+<input type="range" min="1" max="100" value="0" style="width: 100%;"/>
+<input type="date" value="1989-02-01"/>
+<script>
+    var mayapp=angular.module("myapp",[]);//new a app module to hold all of out directives
+    mayapp.directive("helloWorld",function(){//helloWorld与上面的<hello-world></hello-world>对应
+           function link(scope,element,attr){//scope--》module，element is the HTML5的元素，attr是属性
+             element.text("helloworld!");
+           }
+        return{
+            link:link,
+            restrict:'E'//use element name
+        }
+    })
+
+</script>
+</body>
+</html>

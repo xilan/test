@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+    <link rel="stylesheet" type="text/css" href="JSCal2/css/jscal2.css" />
+    <link rel="stylesheet" type="text/css" href="JSCal2/css/border-radius.css" />
+    <link rel="stylesheet" type="text/css" href="JSCal2/css/matrix/matrix.css" />
+    <script type="text/javascript" src="JSCal2/js/jscal2.js"></script>
+    <script type="text/javascript" src="JSCal2/js/lang/en.js"></script>
+</head>
+<body>
+<div id="sample1" style="width:201px;"></div>
+<script>
+    Calendar.setup({
+        cont: "sample1",
+        onSelect:function(date){
+            var datetime=date.date;
+            console.log(datetime)
+            date_time = Calendar.printDate(datetime, "%A, %B %d, %Y");
+            console.log(date_time)
+        }
+    });
+</script>
+</body>
+</html>

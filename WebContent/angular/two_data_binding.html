@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <script src="../script/angular.min.js"></script><!--import js-->
+    <script src="../js/d3.v3.min.js"></script>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body ng-app="myapp" ng-init="foobar={value:50}"><!-- if you change the children value the root value will update-->
+<div ng-controller="HelloController">
+<input type="range" ng-model="foobar.value"/>
+<br>
+<input type="range" ng-model="foobar.value"/>
+</div>
+<br>
+<div ng-controller="HelloController">
+<input type="range" ng-model="foobar.value"/>
+<br>
+<input type="range" ng-model="foobar.value"/>
+</div>
+<br>
+<script>
+    var myapp=angular.module("myapp",[]);
+    myapp.controller("HelloController",function($scope){
+        $scope.ourRangeValue=50;
+    })
+</script>
+</body>
+</html>
